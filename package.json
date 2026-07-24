@@ -1,0 +1,39 @@
+{
+  "name": "ecobuildlab-backend",
+  "version": "1.0.0",
+  "description": "Backend API for EcoBuildLab, a web application for climate analysis and passive bioclimatic design recommendations.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ximerm/ecobuildlab-backend.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "bioclimatic",
+    "climate",
+    "architecture"
+  ],
+  "author": "Ximena Rodríguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ximerm/ecobuildlab-backend/issues"
+  },
+  "homepage": "https://github.com/Ximerm/ecobuildlab-backend#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "globals": "^17.7.0",
+    "nodemon": "^3.1.14"
+  }
+}
