@@ -1,10 +1,11 @@
 const express = require("express");
+const router = require("./routes");
+const connectDB = require("./config/database");
 
 const app = express();
 
-// Primera ruta
-app.get("/", (req, res) => {
-  res.send("EcoBuildLab API is running");
-});
+connectDB();
+
+app.use(router);
 
 module.exports = app;

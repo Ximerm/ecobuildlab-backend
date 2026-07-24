@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/Ximerm/ecobuildlab-backend#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
