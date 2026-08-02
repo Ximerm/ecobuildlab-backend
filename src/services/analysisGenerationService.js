@@ -7,7 +7,7 @@
  *
  * Este módulo orquesta el flujo de generación del análisis,
  * coordinando los diferentes servicios especializados encargados
- * de obtener, procesar y almacenar la información climática.
+ * de obtener y procesar la información climática.
  * --------------------------------------------------------------------
  */
 
@@ -21,8 +21,6 @@ const { getHistoricalClimate } = require("./historicalClimateService");
 
 const { analyzeClimate } = require("./climateAnalysisService");
 
-const analysisRepository = require("./analysisRepository");
-
 // ==============================
 // Funciones públicas
 // ==============================
@@ -35,7 +33,9 @@ const analysisRepository = require("./analysisRepository");
  * 2. Descarga la información climática histórica.
  * 3. Ejecuta el análisis climático.
  * 4. Construye el análisis final.
- * 5. Guarda el análisis en la base de datos.
+ *
+ * El servicio únicamente genera el análisis.
+ * La persistencia se delega a otro servicio.
  *
  * @param {Object} data Información suministrada por el usuario.
  * @returns {Promise<Object>} Análisis generado.
@@ -56,7 +56,7 @@ async function generateAnalysis(data) {
   const climateAnalysis = analyzeClimate(historicalClimate.hourly);
 
   // Construir el análisis final
-  const analysis = {
+  return {
     location,
 
     statistics: climateAnalysis.statistics,
@@ -69,9 +69,6 @@ async function generateAnalysis(data) {
 
     strategies: climateAnalysis.strategies,
   };
-
-  // Guardar el análisis en la base de datos
-  return analysisRepository.create(analysis);
 }
 
 // ==============================
