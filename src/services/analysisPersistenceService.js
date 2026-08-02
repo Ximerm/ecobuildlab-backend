@@ -14,7 +14,7 @@
 // Dependencias
 // ==============================
 
-const analysisRepository = require("./analysisRepository");
+const analysisRepository = require("../repositories/analysisRepository");
 
 // ==============================
 // Funciones públicas

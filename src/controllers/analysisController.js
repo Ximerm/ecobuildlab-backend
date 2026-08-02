@@ -18,7 +18,7 @@
 
 const analysisGenerationService = require("../services/analysisGenerationService");
 
-const analysisRepository = require("../services/analysisRepository");
+const analysisRepository = require("../repositories/analysisRepository");
 
 // ==============================
 // Constantes
