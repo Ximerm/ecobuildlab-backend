@@ -3,12 +3,12 @@
  * EcoBuildLab
  * Archivo: analysisController.js
  * --------------------------------------------------------------------
- * Controlador encargado de gestionar las solicitudes relacionadas
+ * Controlador encargado de gestionar las solicitudes HTTP relacionadas
  * con los análisis bioclimáticos.
  *
- * Este módulo actúa como intermediario entre las rutas y el servicio
- * de análisis, procesando las peticiones HTTP y devolviendo la
- * respuesta correspondiente.
+ * Este módulo recibe las solicitudes del cliente, delega la lógica
+ * de negocio a los servicios correspondientes y construye la respuesta
+ * HTTP.
  * --------------------------------------------------------------------
  */
 
@@ -16,7 +16,9 @@
 // Dependencias
 // ==============================
 
-const analysisService = require("../services/analysisService");
+const analysisGenerationService = require("../services/analysisGenerationService");
+
+const analysisRepository = require("../services/analysisRepository");
 
 // ==============================
 // Constantes
@@ -29,7 +31,7 @@ const ANALYSIS_NOT_FOUND_MESSAGE = "Analysis not found.";
 // ==============================
 
 /**
- * Crea un nuevo análisis.
+ * Genera un nuevo análisis bioclimático.
  *
  * @param {Object} req Solicitud HTTP.
  * @param {Object} res Respuesta HTTP.
@@ -37,7 +39,7 @@ const ANALYSIS_NOT_FOUND_MESSAGE = "Analysis not found.";
  */
 async function createAnalysis(req, res, next) {
   try {
-    const analysis = await analysisService.createAnalysis(req.body);
+    const analysis = await analysisGenerationService.generateAnalysis(req.body);
 
     res.status(201).json(analysis);
   } catch (error) {
@@ -54,7 +56,7 @@ async function createAnalysis(req, res, next) {
  */
 async function getAnalyses(req, res, next) {
   try {
-    const analyses = await analysisService.getAnalyses();
+    const analyses = await analysisRepository.findAll();
 
     res.json(analyses);
   } catch (error) {
@@ -73,7 +75,7 @@ async function getAnalyses(req, res, next) {
  */
 async function getAnalysisById(req, res, next) {
   try {
-    const analysis = await analysisService.getAnalysisById(req.params.id);
+    const analysis = await analysisRepository.findById(req.params.id);
 
     if (!analysis) {
       return res.status(404).json({

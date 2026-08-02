@@ -1,14 +1,13 @@
 /**
  * --------------------------------------------------------------------
  * EcoBuildLab
- * Archivo: analysisService.js
+ * Archivo: analysisRepository.js
  * --------------------------------------------------------------------
- * Servicio encargado de gestionar los análisis bioclimáticos
- * almacenados en la base de datos.
+ * Repositorio encargado de gestionar la persistencia de los análisis
+ * bioclimáticos en la base de datos.
  *
- * Este módulo actúa como intermediario entre los controladores
- * y el modelo Analysis, encapsulando las operaciones de acceso
- * a la información.
+ * Este módulo encapsula las operaciones de acceso al modelo Analysis,
+ * aislando la lógica de persistencia del resto de la aplicación.
  * --------------------------------------------------------------------
  */
 
@@ -28,7 +27,7 @@ const Analysis = require("../models/analysis");
  * @param {Object} data Información del análisis.
  * @returns {Promise<Object>} Análisis creado.
  */
-async function createAnalysis(data) {
+async function create(data) {
   return Analysis.create(data);
 }
 
@@ -40,7 +39,7 @@ async function createAnalysis(data) {
  *
  * @returns {Promise<Array>} Lista de análisis.
  */
-async function getAnalyses() {
+async function findAll() {
   return Analysis.find().sort({ createdAt: -1 });
 }
 
@@ -50,7 +49,7 @@ async function getAnalyses() {
  * @param {String} id Identificador del análisis.
  * @returns {Promise<Object|null>} Análisis encontrado o null.
  */
-async function getAnalysisById(id) {
+async function findById(id) {
   return Analysis.findById(id);
 }
 
@@ -59,7 +58,7 @@ async function getAnalysisById(id) {
 // ==============================
 
 module.exports = {
-  createAnalysis,
-  getAnalyses,
-  getAnalysisById,
+  create,
+  findAll,
+  findById,
 };

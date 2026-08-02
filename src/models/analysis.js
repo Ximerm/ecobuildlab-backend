@@ -6,9 +6,14 @@
  * Modelo que representa un análisis bioclimático generado por
  * EcoBuildLab.
  *
- * Almacena la ubicación analizada, el resumen estadístico del clima,
- * la clasificación bioclimática y las estrategias pasivas
+ * Almacena la ubicación analizada, los resultados del análisis
+ * climático, la clasificación bioclimática y las estrategias pasivas
  * recomendadas para el proyecto.
+ *
+ * Durante el desarrollo del motor climático, las estructuras de
+ * estadísticas, análisis mensual y rosa de los vientos se almacenan
+ * como objetos flexibles. Una vez estabilizado el modelo de dominio,
+ * estos campos podrán sustituirse por subesquemas específicos.
  * --------------------------------------------------------------------
  */
 
@@ -42,12 +47,6 @@ const locationSchema = new mongoose.Schema(
       trim: true,
     },
 
-    countryCode: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
     latitude: {
       type: Number,
       required: true,
@@ -71,81 +70,6 @@ const locationSchema = new mongoose.Schema(
   { _id: false },
 );
 
-const minMeanMaxSchema = new mongoose.Schema(
-  {
-    min: {
-      type: Number,
-      required: true,
-    },
-
-    mean: {
-      type: Number,
-      required: true,
-    },
-
-    max: {
-      type: Number,
-      required: true,
-    },
-
-    unit: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false },
-);
-
-const meanSchema = new mongoose.Schema(
-  {
-    mean: {
-      type: Number,
-      required: true,
-    },
-
-    unit: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false },
-);
-
-const windSchema = new mongoose.Schema(
-  {
-    speed: {
-      type: Number,
-      required: true,
-    },
-
-    direction: {
-      type: String,
-      required: true,
-    },
-
-    unit: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false },
-);
-
-const precipitationSchema = new mongoose.Schema(
-  {
-    annualMean: {
-      type: Number,
-      required: true,
-    },
-
-    unit: {
-      type: String,
-      required: true,
-    },
-  },
-  { _id: false },
-);
-
 const classificationSchema = new mongoose.Schema(
   {
     code: {
@@ -159,15 +83,27 @@ const classificationSchema = new mongoose.Schema(
       trim: true,
     },
 
+    /**
+     * Descripción corta del perfil climático.
+     *
+     * Se incorporará cuando se complete el modelo
+     * de perfiles bioclimáticos.
+     */
     summary: {
       type: String,
-      required: true,
+      default: "",
       trim: true,
     },
 
+    /**
+     * Descripción detallada del perfil climático.
+     *
+     * Se incorporará cuando se complete el modelo
+     * de perfiles bioclimáticos.
+     */
     description: {
       type: String,
-      required: true,
+      default: "",
       trim: true,
     },
   },
@@ -332,39 +268,22 @@ const analysisSchema = new mongoose.Schema(
     },
 
     statistics: {
-      temperature: {
-        type: minMeanMaxSchema,
-        required: true,
-      },
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
+    },
 
-      humidity: {
-        type: minMeanMaxSchema,
-        required: true,
-      },
-
-      precipitation: {
-        type: precipitationSchema,
-        required: true,
-      },
-
-      wind: {
-        type: windSchema,
-        required: true,
-      },
-
-      radiation: {
-        type: meanSchema,
-        required: true,
-      },
-
-      cloudCover: {
-        type: meanSchema,
-        required: true,
-      },
+    monthly: {
+      type: mongoose.Schema.Types.Mixed,
+      required: true,
     },
 
     classification: {
       type: classificationSchema,
+      required: true,
+    },
+
+    windRose: {
+      type: mongoose.Schema.Types.Mixed,
       required: true,
     },
 
