@@ -1,33 +1,34 @@
 # EcoBuildLab Backend
 
-Backend API for EcoBuildLab, a web application that generates climate analyses and passive bioclimatic design recommendations.
+API REST desarrollada para EcoBuildLab, una aplicación web que genera análisis climáticos y recomendaciones de diseño bioclimático pasivo para apoyar las primeras etapas del diseño arquitectónico.
 
 ---
 
-## Features
+## Funcionalidades
 
-- User registration and authentication with JWT
-- Secure password hashing using bcrypt
-- Protected routes
-- Generate climate analyses
-- Save analyses for authenticated users
-- Retrieve saved analyses
-- Delete saved analyses
-- Request validation using Celebrate/Joi
-- Centralized error handling
-- Request and error logging
-- Rate limiting
-- Security headers with Helmet
+- Registro de usuarios
+- Autenticación mediante JWT
+- Contraseñas almacenadas mediante hash con bcrypt
+- Protección de rutas privadas
+- Generación de análisis climáticos
+- Almacenamiento de análisis por usuario
+- Consulta de análisis guardados
+- Eliminación de análisis
+- Validación de solicitudes con Celebrate y Joi
+- Manejo centralizado de errores
+- Registro de solicitudes y errores
+- Limitación de solicitudes (Rate Limiter)
+- Encabezados de seguridad mediante Helmet
 
 ---
 
-## Technologies
+## Tecnologías utilizadas
 
 - Node.js
 - Express
 - MongoDB
 - Mongoose
-- JWT
+- JSON Web Token (JWT)
 - bcryptjs
 - Celebrate
 - Joi
@@ -37,27 +38,27 @@ Backend API for EcoBuildLab, a web application that generates climate analyses a
 
 ---
 
-## Installation
+## Instalación
 
-Clone the repository
+Clonar el repositorio
 
 ```bash
 git clone https://github.com/Ximerm/ecobuildlab-backend.git
 ```
 
-Install dependencies
+Instalar dependencias
 
 ```bash
 npm install
 ```
 
-Run development server
+Ejecutar en modo desarrollo
 
 ```bash
 npm run dev
 ```
 
-Run production server
+Ejecutar en modo producción
 
 ```bash
 npm start
@@ -65,25 +66,25 @@ npm start
 
 ---
 
-## Environment Variables
+## Variables de entorno
 
-Create a `.env` file:
+Crear un archivo `.env` con la siguiente información:
 
 ```text
 NODE_ENV=production
 
-DATABASE_URI=<your mongodb uri>
+DATABASE_URI=<mongodb-uri>
 
-JWT_SECRET=<your secret key>
+JWT_SECRET=<secret-key>
 ```
 
-For development, the project works without a `.env` file.
+En modo desarrollo el proyecto funciona sin archivo `.env`.
 
 ---
 
-## API Endpoints
+## Endpoints de la API
 
-### Authentication
+### Autenticación
 
 POST `/api/signup`
 
@@ -91,7 +92,7 @@ POST `/api/signin`
 
 GET `/api/users/me`
 
-### Climate Analyses
+### Análisis bioclimáticos
 
 POST `/api/analyses/generate`
 
@@ -105,12 +106,13 @@ DELETE `/api/analyses/:id`
 
 ---
 
-## Project Structure
+## Estructura del proyecto
 
 ```text
 src
 │
 ├── config
+├── constants
 ├── controllers
 ├── errors
 ├── logger
@@ -127,14 +129,16 @@ src
 
 ---
 
-## Deployment
+## Despliegue
 
-API URL
+Una vez desplegada la aplicación, la API estará disponible en:
 
-> (Add Render URL after deployment)
+```
+https://tu-dominio.com/api
+```
 
 ---
 
-## Author
+## Autora
 
-Ximena Rodríguez
+**Ximena Rodríguez**

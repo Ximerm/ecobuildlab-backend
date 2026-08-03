@@ -99,7 +99,10 @@ async function getAnalyses(req, res, next) {
  */
 async function getAnalysisById(req, res, next) {
   try {
-    const analysis = await analysisRepository.findById(req.params.id);
+    const analysis = await analysisRepository.findByIdAndOwner(
+      req.params.id,
+      req.user._id,
+    );
 
     if (!analysis) {
       throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
