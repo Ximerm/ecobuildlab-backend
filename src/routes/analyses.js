@@ -4,9 +4,6 @@
  * Archivo: analyses.js
  * --------------------------------------------------------------------
  * Define las rutas relacionadas con los análisis bioclimáticos.
- *
- * Este módulo asocia cada endpoint con el controlador encargado
- * de procesar la solicitud correspondiente.
  * --------------------------------------------------------------------
  */
 
@@ -17,38 +14,61 @@
 const express = require("express");
 
 const {
-  createAnalysis,
+  generateAnalysis,
+  saveAnalysis,
   getAnalyses,
   getAnalysisById,
+  deleteAnalysis,
 } = require("../controllers/analysisController");
 
+const auth = require("../middlewares/auth");
+
 // ==============================
-// Configuración del router
+// Configuración
 // ==============================
 
 const router = express.Router();
 
 // ==============================
-// Rutas
+// Rutas públicas
 // ==============================
 
 /**
- * POST /
- * Crea un nuevo análisis bioclimático.
+ * Genera un análisis climático.
+ *
+ * No requiere autenticación.
  */
-router.post("/", createAnalysis);
+router.post("/generate", generateAnalysis);
+
+// ==============================
+// Middleware de autenticación
+// ==============================
+
+router.use(auth);
+
+// ==============================
+// Rutas protegidas
+// ==============================
 
 /**
- * GET /
- * Obtiene todos los análisis registrados.
+ * Guarda un análisis.
+ */
+router.post("/", saveAnalysis);
+
+/**
+ * Obtiene los análisis del usuario autenticado.
  */
 router.get("/", getAnalyses);
 
 /**
- * GET /:id
- * Obtiene un análisis por su identificador.
+ * Obtiene un análisis por id.
  */
 router.get("/:id", getAnalysisById);
+
+/**
+ * Elimina un análisis.
+ */
+router.delete("/:id", deleteAnalysis);
 
 // ==============================
 // Exportaciones

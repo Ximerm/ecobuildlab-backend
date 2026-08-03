@@ -1,12 +1,9 @@
 /**
  * --------------------------------------------------------------------
  * EcoBuildLab
- * Archivo: index.js
+ * Archivo: users.js
  * --------------------------------------------------------------------
- * Define las rutas principales de la API.
- *
- * Este módulo centraliza el registro de los recursos disponibles y
- * delega la gestión de cada uno a su router correspondiente.
+ * Define las rutas relacionadas con los usuarios.
  * --------------------------------------------------------------------
  */
 
@@ -16,9 +13,18 @@
 
 const express = require("express");
 
-const analysesRouter = require("./analyses");
+const auth = require("../middlewares/auth");
 
-const usersRouter = require("./users");
+const {
+  signup,
+  signin,
+  getCurrentUser,
+} = require("../controllers/userController");
+
+const {
+  validateSignup,
+  validateSignin,
+} = require("../validations/userValidation");
 
 // ==============================
 // Configuración del router
@@ -31,14 +37,22 @@ const router = express.Router();
 // ==============================
 
 /**
- * Rutas relacionadas con los análisis bioclimáticos.
+ * POST /
+ * Registra un nuevo usuario.
  */
-router.use("/analyses", analysesRouter);
+router.post("/signup", validateSignup, signup);
 
 /**
- * Rutas relacionadas con los usuarios.
+ * POST /signin
+ * Autentica un usuario y devuelve un JWT.
  */
-router.use("/", usersRouter);
+router.post("/signin", validateSignin, signin);
+
+/**
+ * GET /users/me
+ * Obtiene la información del usuario autenticado.
+ */
+router.get("/users/me", auth, getCurrentUser);
 
 // ==============================
 // Exportaciones

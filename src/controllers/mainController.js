@@ -12,6 +12,12 @@
  */
 
 // ==============================
+// Dependencias
+// ==============================
+
+const STATUS_CODES = require("../constants/statusCodes");
+
+// ==============================
 // Constantes
 // ==============================
 
@@ -31,7 +37,7 @@ const API_MESSAGE = "EcoBuildLab API is running.";
  * @param {Object} res Respuesta HTTP.
  */
 function getHome(req, res) {
-  res.status(200).send(API_MESSAGE);
+  res.status(STATUS_CODES.OK).send(API_MESSAGE);
 }
 
 // ==============================

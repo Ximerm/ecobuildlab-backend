@@ -18,37 +18,63 @@
 
 const analysisGenerationService = require("../services/analysisGenerationService");
 
+const analysisPersistenceService = require("../services/analysisPersistenceService");
+
 const analysisRepository = require("../repositories/analysisRepository");
 
-// ==============================
-// Constantes
-// ==============================
+const STATUS_CODES = require("../constants/statusCodes");
 
-const ANALYSIS_NOT_FOUND_MESSAGE = "Analysis not found.";
+const MESSAGES = require("../constants/messages");
+
+const NotFoundError = require("../errors/NotFoundError");
 
 // ==============================
 // Funciones públicas
 // ==============================
 
 /**
- * Genera un nuevo análisis bioclimático.
+ * Genera un análisis bioclimático.
+ *
+ * No almacena información en la base de datos.
  *
  * @param {Object} req Solicitud HTTP.
  * @param {Object} res Respuesta HTTP.
  * @param {Function} next Middleware para manejo de errores.
  */
-async function createAnalysis(req, res, next) {
+async function generateAnalysis(req, res, next) {
   try {
     const analysis = await analysisGenerationService.generateAnalysis(req.body);
 
-    res.status(201).json(analysis);
+    res.status(STATUS_CODES.OK).json(analysis);
   } catch (error) {
     next(error);
   }
 }
 
 /**
- * Obtiene todos los análisis registrados.
+ * Guarda un análisis generado previamente.
+ *
+ * El análisis queda asociado al usuario autenticado.
+ *
+ * @param {Object} req Solicitud HTTP.
+ * @param {Object} res Respuesta HTTP.
+ * @param {Function} next Middleware para manejo de errores.
+ */
+async function saveAnalysis(req, res, next) {
+  try {
+    const analysis = await analysisPersistenceService.saveAnalysis(
+      req.body,
+      req.user._id,
+    );
+
+    res.status(STATUS_CODES.CREATED).json(analysis);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Obtiene todos los análisis del usuario autenticado.
  *
  * @param {Object} req Solicitud HTTP.
  * @param {Object} res Respuesta HTTP.
@@ -56,9 +82,9 @@ async function createAnalysis(req, res, next) {
  */
 async function getAnalyses(req, res, next) {
   try {
-    const analyses = await analysisRepository.findAll();
+    const analyses = await analysisRepository.findByOwner(req.user._id);
 
-    res.json(analyses);
+    res.status(STATUS_CODES.OK).json(analyses);
   } catch (error) {
     next(error);
   }
@@ -66,8 +92,6 @@ async function getAnalyses(req, res, next) {
 
 /**
  * Obtiene un análisis por su identificador.
- *
- * Si el análisis no existe se devuelve un error 404.
  *
  * @param {Object} req Solicitud HTTP.
  * @param {Object} res Respuesta HTTP.
@@ -78,12 +102,38 @@ async function getAnalysisById(req, res, next) {
     const analysis = await analysisRepository.findById(req.params.id);
 
     if (!analysis) {
-      return res.status(404).json({
-        message: ANALYSIS_NOT_FOUND_MESSAGE,
-      });
+      throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
     }
 
-    res.json(analysis);
+    res.status(STATUS_CODES.OK).json(analysis);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Elimina un análisis del usuario autenticado.
+ *
+ * @param {Object} req Solicitud HTTP.
+ * @param {Object} res Respuesta HTTP.
+ * @param {Function} next Middleware para manejo de errores.
+ */
+async function deleteAnalysis(req, res, next) {
+  try {
+    const analysis = await analysisRepository.findByIdAndOwner(
+      req.params.id,
+      req.user._id,
+    );
+
+    if (!analysis) {
+      throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
+    }
+
+    await analysisRepository.deleteById(req.params.id);
+
+    res.status(STATUS_CODES.OK).json({
+      message: MESSAGES.ANALYSIS_DELETED,
+    });
   } catch (error) {
     next(error);
   }
@@ -94,7 +144,9 @@ async function getAnalysisById(req, res, next) {
 // ==============================
 
 module.exports = {
-  createAnalysis,
+  generateAnalysis,
+  saveAnalysis,
   getAnalyses,
   getAnalysisById,
+  deleteAnalysis,
 };

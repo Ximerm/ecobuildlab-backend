@@ -3,10 +3,10 @@
  * EcoBuildLab
  * Archivo: analysisPersistenceService.js
  * --------------------------------------------------------------------
- * Servicio encargado de almacenar los análisis bioclimáticos.
+ * Servicio encargado de almacenar análisis bioclimáticos.
  *
- * Este módulo encapsula la persistencia de los análisis,
- * delegando el acceso a la base de datos al repositorio.
+ * Este módulo encapsula la lógica necesaria para asociar un análisis
+ * con su propietario y persistirlo en la base de datos.
  * --------------------------------------------------------------------
  */
 
@@ -24,10 +24,14 @@ const analysisRepository = require("../repositories/analysisRepository");
  * Guarda un análisis bioclimático.
  *
  * @param {Object} analysis Análisis generado.
- * @returns {Promise<Object>} Análisis almacenado.
+ * @param {String} ownerId Identificador del usuario.
+ * @returns {Promise<Object>}
  */
-async function saveAnalysis(analysis) {
-  return analysisRepository.create(analysis);
+async function saveAnalysis(analysis, ownerId) {
+  return analysisRepository.create({
+    owner: ownerId,
+    ...analysis,
+  });
 }
 
 // ==============================

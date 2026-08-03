@@ -17,9 +17,21 @@
 
 const express = require("express");
 
+const helmet = require("helmet");
+
+const { errors } = require("celebrate");
+
 const connectDB = require("./config/database");
+
+const rateLimiter = require("./config/rateLimiter");
+
 const { getHome } = require("./controllers/mainController");
+
 const routes = require("./routes");
+
+const errorHandler = require("./middlewares/errorHandler");
+
+const { requestLogger, errorLogger } = require("./logger/logger");
 
 // ==============================
 // Configuración de la aplicación
@@ -31,9 +43,6 @@ const app = express();
 // Inicialización
 // ==============================
 
-/**
- * Establece la conexión con la base de datos.
- */
 connectDB();
 
 // ==============================
@@ -41,9 +50,25 @@ connectDB();
 // ==============================
 
 /**
+ * Agrega encabezados HTTP de seguridad.
+ */
+app.use(helmet());
+
+/**
+ * Limita el número de solicitudes HTTP por dirección IP
+ * para proteger la API frente a abuso o ataques.
+ */
+app.use(rateLimiter);
+
+/**
  * Middleware para procesar solicitudes con cuerpo JSON.
  */
 app.use(express.json());
+
+/**
+ * Registra todas las solicitudes HTTP.
+ */
+app.use(requestLogger);
 
 // ==============================
 // Rutas
@@ -51,16 +76,32 @@ app.use(express.json());
 
 /**
  * Página principal del servidor.
- *
- * Se utiliza para verificar rápidamente que la aplicación
- * está en funcionamiento.
  */
 app.get("/", getHome);
 
 /**
- * Rutas de la API de EcoBuildLab.
+ * Rutas de la API.
  */
 app.use("/api", routes);
+
+// ==============================
+// Manejo de errores
+// ==============================
+
+/**
+ * Maneja errores de validación generados por Celebrate.
+ */
+app.use(errors());
+
+/**
+ * Registra todos los errores.
+ */
+app.use(errorLogger);
+
+/**
+ * Middleware global de manejo de errores.
+ */
+app.use(errorHandler);
 
 // ==============================
 // Exportaciones

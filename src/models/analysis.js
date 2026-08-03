@@ -262,6 +262,12 @@ const strategySchema = new mongoose.Schema(
 
 const analysisSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
     location: {
       type: locationSchema,
       required: true,
