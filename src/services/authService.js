@@ -25,7 +25,7 @@ const UnauthorizedError = require("../errors/UnauthorizedError");
 
 const MESSAGES = require("../constants/messages");
 
-const { JWT_SECRET, TOKEN_EXPIRATION } = require("../config/auth");
+const { JWT_SECRET, TOKEN_EXPIRATION, SALT_ROUNDS } = require("../config/auth");
 
 // ==============================
 // Funciones públicas
@@ -41,7 +41,7 @@ const { JWT_SECRET, TOKEN_EXPIRATION } = require("../config/auth");
  * @returns {Promise<Object>} Usuario creado.
  */
 async function signup(data) {
-  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
 
   return userRepository.create({
     name: data.name,

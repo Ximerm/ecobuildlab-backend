@@ -132,7 +132,7 @@ async function deleteAnalysis(req, res, next) {
       throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
     }
 
-    await analysisRepository.deleteById(req.params.id);
+    await analysisRepository.deleteById(analysis._id);
 
     res.status(STATUS_CODES.OK).json({
       message: MESSAGES.ANALYSIS_DELETED,

@@ -28,9 +28,7 @@ const mongoose = require("mongoose");
  * para facilitar el despliegue en diferentes entornos.
  */
 const DATABASE_URI =
-  process.env.NODE_ENV === "production"
-    ? process.env.DATABASE_URI
-    : "mongodb://127.0.0.1:27017/ecobuildlab";
+  process.env.DATABASE_URI || "mongodb://127.0.0.1:27017/ecobuildlab";
 
 // ==============================
 // Funciones públicas

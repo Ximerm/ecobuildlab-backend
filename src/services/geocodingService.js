@@ -15,17 +15,12 @@
 // Dependencias
 // ==============================
 
-const { GEOCODING_API_URL } = require("../config/api");
-
-// ==============================
-// Constantes
-// ==============================
-
-const DEFAULT_RESULTS = 1;
-
-const DEFAULT_LANGUAGE = "es";
-
-const DEFAULT_FORMAT = "json";
+const {
+  GEOCODING_API_URL,
+  GEOCODING_DEFAULT_RESULTS,
+  GEOCODING_DEFAULT_LANGUAGE,
+  GEOCODING_DEFAULT_FORMAT,
+} = require("../config/api");
 
 // ==============================
 // Funciones privadas
@@ -40,9 +35,9 @@ const DEFAULT_FORMAT = "json";
 function buildSearchUrl(query) {
   const params = new URLSearchParams({
     name: query,
-    count: DEFAULT_RESULTS,
-    language: DEFAULT_LANGUAGE,
-    format: DEFAULT_FORMAT,
+    count: GEOCODING_DEFAULT_RESULTS,
+    language: GEOCODING_DEFAULT_LANGUAGE,
+    format: GEOCODING_DEFAULT_FORMAT,
   });
 
   return `${GEOCODING_API_URL}?${params.toString()}`;

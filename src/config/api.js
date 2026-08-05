@@ -34,6 +34,21 @@ const GEOCODING_API_URL = "https://geocoding-api.open-meteo.com/v1/search";
 const ARCHIVE_API_URL = "https://archive-api.open-meteo.com/v1/archive";
 
 // ==============================
+// Configuración de Geocoding
+// ==============================
+
+/**
+ * Configuración utilizada para consultar
+ * la API de geocodificación.
+ */
+
+const GEOCODING_DEFAULT_RESULTS = 1;
+
+const GEOCODING_DEFAULT_LANGUAGE = "es";
+
+const GEOCODING_DEFAULT_FORMAT = "json";
+
+// ==============================
 // Variables climáticas
 // ==============================
 
@@ -108,6 +123,10 @@ module.exports = {
 
   GEOCODING_API_URL,
   ARCHIVE_API_URL,
+
+  GEOCODING_DEFAULT_RESULTS,
+  GEOCODING_DEFAULT_LANGUAGE,
+  GEOCODING_DEFAULT_FORMAT,
 
   HOURLY_VARIABLES,
   HOURLY_VARIABLE_KEYS,
