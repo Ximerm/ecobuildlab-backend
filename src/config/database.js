@@ -23,9 +23,8 @@ const mongoose = require("mongoose");
 /**
  * URI de conexión a MongoDB.
  *
- * Temporalmente se utiliza una dirección local.
- * En futuras versiones se leerá desde un archivo .env
- * para facilitar el despliegue en diferentes entornos.
+ * La URI se obtiene desde DATABASE_URI.
+ * En desarrollo se utiliza una conexión local por defecto.
  */
 const DATABASE_URI =
   process.env.DATABASE_URI || "mongodb://127.0.0.1:27017/ecobuildlab";

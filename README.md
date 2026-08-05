@@ -1,20 +1,76 @@
 # EcoBuildLab Backend
 
-API REST desarrollada para EcoBuildLab, una aplicación web que genera análisis climáticos y recomendaciones de diseño bioclimático pasivo para apoyar las primeras etapas del diseño arquitectónico.
+![Node.js](https://img.shields.io/badge/Node.js-22-green)
+![Express](https://img.shields.io/badge/Express-5-black)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+
+Backend de **EcoBuildLab**, una API REST desarrollada con **Node.js**, **Express** y **MongoDB** para generar, almacenar y gestionar análisis bioclimáticos que apoyan el diseño arquitectónico sostenible.
+
+La aplicación implementa autenticación mediante JWT, almacenamiento seguro de contraseñas, validación de solicitudes, manejo centralizado de errores y despliegue en Google Cloud con HTTPS.
 
 ---
 
-## Funcionalidades
+# Descripción
+
+EcoBuildLab permite a los usuarios:
+
+- Registrarse e iniciar sesión de forma segura.
+- Generar análisis bioclimáticos a partir de una ubicación.
+- Guardar análisis asociados a su cuenta.
+- Consultar sus análisis almacenados.
+- Eliminar análisis previamente guardados.
+
+Cada usuario únicamente puede acceder a su propia información.
+
+---
+
+# Tecnologías
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+## Seguridad
+
+- JSON Web Token (JWT)
+- bcryptjs
+- Helmet
+- Express Rate Limit
+
+## Validación
+
+- Celebrate
+- Joi
+
+## Registro
+
+- Winston
+
+## Despliegue
+
+- Google Cloud Platform (Compute Engine)
+- Nginx
+- Let's Encrypt
+- DuckDNS
+
+---
+
+# Funcionalidades
 
 - Registro de usuarios
-- Autenticación mediante JWT
-- Contraseñas almacenadas mediante hash con bcrypt
+- Inicio de sesión mediante JWT
+- Contraseñas cifradas con bcrypt
 - Protección de rutas privadas
-- Generación de análisis climáticos
+- Generación de análisis bioclimáticos
 - Almacenamiento de análisis por usuario
-- Consulta de análisis guardados
+- Consulta de todos los análisis del usuario
+- Consulta de un análisis por ID
 - Eliminación de análisis
-- Validación de solicitudes con Celebrate y Joi
+- Validación de solicitudes
 - Manejo centralizado de errores
 - Registro de solicitudes y errores
 - Limitación de solicitudes (Rate Limiter)
@@ -22,28 +78,160 @@ API REST desarrollada para EcoBuildLab, una aplicación web que genera análisis
 
 ---
 
-## Tecnologías utilizadas
+# Arquitectura
 
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- JSON Web Token (JWT)
-- bcryptjs
-- Celebrate
-- Joi
-- Helmet
-- Winston
-- Express Rate Limit
+```text
+                    Cliente
+
+                       │
+                   HTTPS (443)
+
+                       │
+
+                 Nginx Reverse Proxy
+
+                       │
+
+               Express / Node.js API
+
+                       │
+
+                    MongoDB
+```
 
 ---
 
-## Instalación
+# API pública
+
+La API se encuentra desplegada en Google Cloud y puede accederse mediante:
+
+## Dominio
+
+https://ecobuildlab.duckdns.org
+
+## API
+
+https://ecobuildlab.duckdns.org/api
+
+---
+
+# Endpoints
+
+## Autenticación
+
+### Registrar usuario
+
+POST
+
+```
+/api/signup
+```
+
+### Iniciar sesión
+
+POST
+
+```
+/api/signin
+```
+
+Devuelve un JWT.
+
+---
+
+### Usuario autenticado
+
+GET
+
+```
+/api/users/me
+```
+
+---
+
+## Análisis
+
+### Generar análisis
+
+POST
+
+```
+/api/analyses/generate
+```
+
+Genera un análisis sin almacenarlo.
+
+---
+
+### Guardar análisis
+
+POST
+
+```
+/api/analyses
+```
+
+---
+
+### Obtener todos los análisis
+
+GET
+
+```
+/api/analyses
+```
+
+---
+
+### Obtener un análisis
+
+GET
+
+```
+/api/analyses/:id
+```
+
+---
+
+### Eliminar un análisis
+
+DELETE
+
+```
+/api/analyses/:id
+```
+
+---
+
+# Códigos de respuesta
+
+La API utiliza los siguientes códigos HTTP:
+
+| Código | Descripción                |
+| ------ | -------------------------- |
+| 200    | OK                         |
+| 201    | Recurso creado             |
+| 400    | Solicitud inválida         |
+| 401    | No autorizado              |
+| 403    | Acceso denegado            |
+| 404    | Recurso no encontrado      |
+| 409    | Conflicto                  |
+| 500    | Error interno del servidor |
+
+---
+
+# Instalación
 
 Clonar el repositorio
 
 ```bash
 git clone https://github.com/Ximerm/ecobuildlab-backend.git
+```
+
+Entrar al proyecto
+
+```bash
+cd ecobuildlab-backend
 ```
 
 Instalar dependencias
@@ -52,13 +240,33 @@ Instalar dependencias
 npm install
 ```
 
-Ejecutar en modo desarrollo
+---
+
+# Variables de entorno
+
+En producción crear un archivo `.env` con:
+
+```env
+NODE_ENV=production
+
+DATABASE_URI=<mongodb_uri>
+
+JWT_SECRET=<secret_key>
+```
+
+En modo desarrollo el proyecto funciona sin archivo `.env`.
+
+---
+
+# Scripts
+
+Modo desarrollo
 
 ```bash
 npm run dev
 ```
 
-Ejecutar en modo producción
+Modo producción
 
 ```bash
 npm start
@@ -66,47 +274,7 @@ npm start
 
 ---
 
-## Variables de entorno
-
-Crear un archivo `.env` con la siguiente información:
-
-```text
-NODE_ENV=production
-
-DATABASE_URI=<mongodb-uri>
-
-JWT_SECRET=<secret-key>
-```
-
-En modo desarrollo el proyecto funciona sin archivo `.env`.
-
----
-
-## Endpoints de la API
-
-### Autenticación
-
-POST `/api/signup`
-
-POST `/api/signin`
-
-GET `/api/users/me`
-
-### Análisis bioclimáticos
-
-POST `/api/analyses/generate`
-
-POST `/api/analyses`
-
-GET `/api/analyses`
-
-GET `/api/analyses/:id`
-
-DELETE `/api/analyses/:id`
-
----
-
-## Estructura del proyecto
+# Estructura del proyecto
 
 ```text
 src
@@ -129,16 +297,57 @@ src
 
 ---
 
-## Despliegue
+# Seguridad
 
-Una vez desplegada la aplicación, la API estará disponible en:
+La API implementa:
 
-```
-https://tu-dominio.com/api
-```
+- Autenticación mediante JWT
+- Contraseñas cifradas con bcrypt
+- Validación mediante Celebrate y Joi
+- Helmet
+- Express Rate Limit
+- Manejo centralizado de errores
+- HTTPS mediante Let's Encrypt
+- Reverse Proxy con Nginx
 
 ---
 
-## Autora
+# Registro (Logging)
 
-**Ximena Rodríguez**
+La aplicación registra:
+
+- Todas las solicitudes HTTP en `request.log`
+- Todos los errores en `error.log`
+
+Los archivos de registro no forman parte del repositorio.
+
+---
+
+## Despliegue
+
+La API se encuentra desplegada en Google Cloud Platform utilizando Nginx como
+reverse proxy y certificados SSL emitidos por Let's Encrypt.
+
+**Servidor**
+
+https://ecobuildlab.duckdns.org
+
+**API REST**
+
+https://ecobuildlab.duckdns.org/api
+
+---
+
+# Licencia
+
+Este proyecto se distribuye bajo la licencia MIT.
+
+---
+
+# Autora
+
+Ximena Rodríguez
+
+GitHub:
+
+https://github.com/Ximerm
