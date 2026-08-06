@@ -34,7 +34,7 @@ const saveAnalysisValidation = celebrate({
 
     statistics: Joi.object().required(),
 
-    monthly: Joi.object().required(),
+    monthly: Joi.array().items(Joi.object()).required(),
 
     classification: Joi.object().required(),
 
