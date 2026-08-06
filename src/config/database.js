@@ -27,7 +27,9 @@ const mongoose = require("mongoose");
  * En desarrollo se utiliza una conexión local por defecto.
  */
 const DATABASE_URI =
-  process.env.DATABASE_URI || "mongodb://127.0.0.1:27017/ecobuildlab";
+  process.env.NODE_ENV === "production"
+    ? process.env.DATABASE_URI
+    : "mongodb://127.0.0.1:27017/ecobuildlab";
 
 // ==============================
 // Funciones públicas

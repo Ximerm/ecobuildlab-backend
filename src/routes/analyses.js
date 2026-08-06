@@ -36,17 +36,6 @@ const {
 const router = express.Router();
 
 // ==============================
-// Rutas públicas
-// ==============================
-
-/**
- * Genera un análisis climático.
- *
- * No requiere autenticación.
- */
-router.post("/generate", generateAnalysisValidation, generateAnalysis);
-
-// ==============================
 // Middleware de autenticación
 // ==============================
 
@@ -55,6 +44,11 @@ router.use(auth);
 // ==============================
 // Rutas protegidas
 // ==============================
+
+/**
+ * Genera un análisis climático para el usuario autenticado.
+ */
+router.post("/generate", generateAnalysisValidation, generateAnalysis);
 
 /**
  * Guarda un análisis.
