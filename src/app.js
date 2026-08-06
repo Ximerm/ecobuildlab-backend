@@ -39,6 +39,8 @@ const { requestLogger, errorLogger } = require("./logger/logger");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 // ==============================
 // Inicialización
 // ==============================

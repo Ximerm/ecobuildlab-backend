@@ -23,5 +23,6 @@ module.exports = {
   ANALYSIS_DELETED: "Analysis deleted successfully.",
 
   // General
+  FORBIDDEN: "You do not have permission to perform this action.",
   INTERNAL_SERVER_ERROR: "Internal server error.",
 };

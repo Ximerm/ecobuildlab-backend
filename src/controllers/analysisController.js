@@ -28,6 +28,8 @@ const MESSAGES = require("../constants/messages");
 
 const NotFoundError = require("../errors/NotFoundError");
 
+const ForbiddenError = require("../errors/ForbiddenError");
+
 // ==============================
 // Funciones públicas
 // ==============================
@@ -123,13 +125,14 @@ async function getAnalysisById(req, res, next) {
  */
 async function deleteAnalysis(req, res, next) {
   try {
-    const analysis = await analysisRepository.findByIdAndOwner(
-      req.params.id,
-      req.user._id,
-    );
+    const analysis = await analysisRepository.findById(req.params.id);
 
     if (!analysis) {
       throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
+    }
+
+    if (analysis.owner.toString() !== req.user._id.toString()) {
+      throw new ForbiddenError(MESSAGES.FORBIDDEN);
     }
 
     await analysisRepository.deleteById(analysis._id);
