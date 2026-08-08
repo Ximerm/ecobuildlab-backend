@@ -17,6 +17,8 @@
 
 const express = require("express");
 
+const cors = require("cors");
+
 const helmet = require("helmet");
 
 const { errors } = require("celebrate");
@@ -40,6 +42,16 @@ const { requestLogger, errorLogger } = require("./logger/logger");
 const app = express();
 
 app.set("trust proxy", 1);
+
+// ==============================
+// Configuración CORS
+// ==============================
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
 // ==============================
 // Inicialización
