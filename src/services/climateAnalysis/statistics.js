@@ -131,6 +131,32 @@ function calculateRadiationStatistics(hourly) {
 }
 
 /**
+ * Calcula las estadísticas de irradiación solar diaria.
+ *
+ * Open-Meteo proporciona shortwave_radiation_sum
+ * en MJ/m² por día.
+ *
+ * El valor se convierte a kWh/m²·día.
+ *
+ * @param {Object} daily Datos diarios de Open-Meteo.
+ * @returns {Object}
+ */
+function calculateSolarIrradiationStatistics(daily) {
+  const values = daily.shortwave_radiation_sum
+    .filter((value) => value !== null && value !== undefined)
+    .map((value) => value / 3.6);
+
+  const { mean, maximum } = calculateVariableStatistics(values);
+
+  return {
+    annual: {
+      mean,
+      maximum,
+    },
+  };
+}
+
+/**
  * Calcula las estadísticas de nubosidad.
  *
  * @param {Object} hourly Datos horarios.
@@ -155,7 +181,7 @@ function calculateCloudCoverStatistics(hourly) {
  * @param {Object} hourly Datos horarios provenientes de Open-Meteo.
  * @returns {Object} Estadísticas climáticas.
  */
-function calculateStatistics(hourly) {
+function calculateStatistics(hourly, daily) {
   return {
     temperature: calculateTemperatureStatistics(hourly),
 
@@ -166,6 +192,8 @@ function calculateStatistics(hourly) {
     wind: calculateWindStatistics(hourly),
 
     radiation: calculateRadiationStatistics(hourly),
+
+    solarIrradiation: calculateSolarIrradiationStatistics(daily),
 
     cloudCover: calculateCloudCoverStatistics(hourly),
   };

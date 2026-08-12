@@ -22,6 +22,8 @@ const {
   HISTORICAL_PERIOD_YEARS,
 } = require('../config/api');
 
+const DAILY_VARIABLES = ['shortwave_radiation_sum'];
+
 // ==============================
 // Funciones privadas
 // ==============================
@@ -59,7 +61,12 @@ function buildArchiveUrl(location, period) {
     start_date: period.startDate,
     end_date: period.endDate,
     hourly: HOURLY_VARIABLES.join(','),
+    daily: DAILY_VARIABLES.join(','),
     timezone: location.timezone,
+
+    temperature_unit: 'celsius',
+    wind_speed_unit: 'ms',
+    precipitation_unit: 'mm',
   });
 
   return `${ARCHIVE_API_URL}?${params.toString()}`;
@@ -120,7 +127,13 @@ async function getHistoricalClimate(location, options = {}) {
 
     // Registros horarios sin procesar.
     // Serán utilizados posteriormente por climateAnalysisService.
+    hourlyUnits: data.hourly_units,
+
+    dailyUnits: data.daily_units,
+
     hourly: data.hourly,
+
+    daily: data.daily,
   };
 }
 

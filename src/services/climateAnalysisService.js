@@ -50,12 +50,12 @@ const { generateStrategies } = require('./strategy/strategyGenerator');
  * @returns {Object} Resultado completo del análisis climático.
  */
 
-function analyzeClimate(hourly) {
+function analyzeClimate(hourly, daily) {
   // ==============================
   // Análisis climático
   // ==============================
 
-  const statistics = calculateStatistics(hourly);
+  const statistics = calculateStatistics(hourly, daily);
 
   const monthly = calculateMonthlyAnalysis(hourly);
 

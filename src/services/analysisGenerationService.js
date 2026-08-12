@@ -53,11 +53,16 @@ async function generateAnalysis(data) {
   }
 
   // Ejecutar el análisis climático
-  const climateAnalysis = analyzeClimate(historicalClimate.hourly);
+  const climateAnalysis = analyzeClimate(
+    historicalClimate.hourly,
+    historicalClimate.daily,
+  );
 
   // Construir el análisis final
   return {
     location,
+
+    units: historicalClimate.hourlyUnits,
 
     statistics: climateAnalysis.statistics,
 
