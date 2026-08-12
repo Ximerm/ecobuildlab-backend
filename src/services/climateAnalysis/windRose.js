@@ -19,20 +19,20 @@
 // Dependencias
 // ==============================
 
-const { HOURLY_VARIABLE_KEYS } = require("../../config/api");
+const { HOURLY_VARIABLE_KEYS } = require('../../config/api');
 
 const {
   CALM_THRESHOLD,
   SECTOR_ANGLE,
   DIRECTIONS,
-} = require("../../config/windRose");
+} = require('../../config/windRose');
 
 const {
   calculateMean,
   calculateMaximum,
   calculatePercentage,
   round,
-} = require("./mathUtilities");
+} = require('./mathUtilities');
 
 // ==============================
 // Constantes
@@ -115,17 +115,13 @@ function initializeDirectionGroups(sectors) {
  * @returns {Object|null}
  */
 function findDirection(angle, sectors) {
-  for (const sector of sectors) {
+  return sectors.find((sector) => {
     if (sector.start > sector.end) {
-      if (angle >= sector.start || angle < sector.end) {
-        return sector;
-      }
-    } else if (angle >= sector.start && angle < sector.end) {
-      return sector;
+      return angle >= sector.start || angle < sector.end;
     }
-  }
 
-  return null;
+    return angle >= sector.start && angle < sector.end;
+  });
 }
 
 /**
@@ -227,6 +223,23 @@ function calculateDirectionStatistics(groupedDirections, totalHours) {
 }
 
 /**
+ * Selecciona la dirección con mayor cantidad de horas.
+ *
+ * En caso de empate, conserva la primera dirección encontrada.
+ *
+ * @param {Object} prevailing Dirección predominante actual.
+ * @param {Object} current Dirección que se está evaluando.
+ * @returns {Object} Dirección predominante.
+ */
+function selectPrevailingDirection(prevailing, current) {
+  if (current.hours > prevailing.hours) {
+    return current;
+  }
+
+  return prevailing;
+}
+
+/**
  * Obtiene la dirección predominante.
  *
  * La dirección predominante corresponde al sector con el mayor número
@@ -243,9 +256,7 @@ function findPrevailingDirection(directions) {
     return null;
   }
 
-  return validDirections.reduce((prevailing, current) =>
-    current.hours > prevailing.hours ? current : prevailing,
-  );
+  return validDirections.reduce(selectPrevailingDirection);
 }
 
 // ==============================
@@ -262,6 +273,7 @@ function calculateWindRose(hourly) {
   if (!hourly) {
     return EMPTY_WIND_ROSE;
   }
+
   const sectors = buildDirectionSectors();
 
   const { groupedDirections, calmHours, totalHours } = groupWindByDirection(

@@ -3,8 +3,12 @@
  * EcoBuildLab
  * Archivo: logger.js
  * --------------------------------------------------------------------
- * Configura los middlewares encargados de registrar todas las
- * solicitudes HTTP y los errores de la aplicación.
+ * Configura los mecanismos de registro de la aplicación.
+ *
+ * Este módulo proporciona:
+ * - Un logger general de Winston para registrar eventos de la aplicación.
+ * - Un middleware para registrar solicitudes HTTP.
+ * - Un middleware para registrar errores de Express.
  * --------------------------------------------------------------------
  */
 
@@ -12,9 +16,23 @@
 // Dependencias
 // ==============================
 
-const expressWinston = require("express-winston");
+const expressWinston = require('express-winston');
 
-const winston = require("winston");
+const winston = require('winston');
+
+// ==============================
+// Logger general de la aplicación
+// ==============================
+
+const applicationLogger = winston.createLogger({
+  format: winston.format.json(),
+
+  transports: [
+    new winston.transports.File({
+      filename: 'logs/application.log',
+    }),
+  ],
+});
 
 // ==============================
 // Logger de solicitudes
@@ -23,7 +41,7 @@ const winston = require("winston");
 const requestLogger = expressWinston.logger({
   transports: [
     new winston.transports.File({
-      filename: "logs/request.log",
+      filename: 'logs/request.log',
     }),
   ],
 
@@ -37,7 +55,7 @@ const requestLogger = expressWinston.logger({
 const errorLogger = expressWinston.errorLogger({
   transports: [
     new winston.transports.File({
-      filename: "logs/error.log",
+      filename: 'logs/error.log',
     }),
   ],
 
@@ -49,6 +67,7 @@ const errorLogger = expressWinston.errorLogger({
 // ==============================
 
 module.exports = {
+  applicationLogger,
   requestLogger,
   errorLogger,
 };

@@ -12,7 +12,7 @@
 // Dependencias
 // ==============================
 
-const { celebrate, Joi, Segments } = require("celebrate");
+const { celebrate, Joi, Segments } = require('celebrate');
 
 // ==============================
 // Validaciones

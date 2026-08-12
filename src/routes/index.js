@@ -14,11 +14,11 @@
 // Dependencias
 // ==============================
 
-const express = require("express");
+const express = require('express');
 
-const analysesRouter = require("./analyses");
+const analysesRouter = require('./analyses');
 
-const usersRouter = require("./users");
+const usersRouter = require('./users');
 
 // ==============================
 // Configuración del router
@@ -33,12 +33,12 @@ const router = express.Router();
 /**
  * Rutas relacionadas con los análisis bioclimáticos.
  */
-router.use("/analyses", analysesRouter);
+router.use('/analyses', analysesRouter);
 
 /**
  * Rutas relacionadas con los usuarios.
  */
-router.use("/", usersRouter);
+router.use('/', usersRouter);
 
 // ==============================
 // Exportaciones

@@ -14,7 +14,9 @@
 // Dependencias
 // ==============================
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
+
+const { applicationLogger } = require('../logger/logger');
 
 // ==============================
 // Configuración
@@ -26,10 +28,9 @@ const mongoose = require("mongoose");
  * La URI se obtiene desde DATABASE_URI.
  * En desarrollo se utiliza una conexión local por defecto.
  */
-const DATABASE_URI =
-  process.env.NODE_ENV === "production"
-    ? process.env.DATABASE_URI
-    : "mongodb://127.0.0.1:27017/ecobuildlab";
+const DATABASE_URI = process.env.NODE_ENV === 'production'
+  ? process.env.DATABASE_URI
+  : 'mongodb://127.0.0.1:27017/ecobuildlab';
 
 // ==============================
 // Funciones públicas
@@ -45,10 +46,11 @@ async function connectDB() {
   try {
     await mongoose.connect(DATABASE_URI);
 
-    console.log("✅ MongoDB connected.");
+    applicationLogger.info('MongoDB connected.');
   } catch (error) {
-    console.error("MongoDB connection failed.");
-    console.error(error.message);
+    applicationLogger.error('MongoDB connection failed.', {
+      error: error.message,
+    });
 
     process.exit(1);
   }

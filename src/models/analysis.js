@@ -21,7 +21,7 @@
 // Dependencias
 // ==============================
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 // ==============================
 // Subesquemas reutilizables
@@ -91,7 +91,7 @@ const classificationSchema = new mongoose.Schema(
      */
     summary: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
     },
 
@@ -103,7 +103,7 @@ const classificationSchema = new mongoose.Schema(
      */
     description: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
     },
   },
@@ -264,7 +264,7 @@ const analysisSchema = new mongoose.Schema(
   {
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
 
@@ -307,4 +307,4 @@ const analysisSchema = new mongoose.Schema(
 // Exportaciones
 // ==============================
 
-module.exports = mongoose.model("Analysis", analysisSchema);
+module.exports = mongoose.model('Analysis', analysisSchema);

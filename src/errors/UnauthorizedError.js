@@ -8,7 +8,7 @@
  * --------------------------------------------------------------------
  */
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
 class UnauthorizedError extends Error {
   constructor(message) {

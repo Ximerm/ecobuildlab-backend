@@ -20,7 +20,7 @@ const {
   ARCHIVE_API_URL,
   HOURLY_VARIABLES,
   HISTORICAL_PERIOD_YEARS,
-} = require("../config/api");
+} = require('../config/api');
 
 // ==============================
 // Funciones privadas
@@ -58,7 +58,7 @@ function buildArchiveUrl(location, period) {
     longitude: location.longitude,
     start_date: period.startDate,
     end_date: period.endDate,
-    hourly: HOURLY_VARIABLES.join(","),
+    hourly: HOURLY_VARIABLES.join(','),
     timezone: location.timezone,
   });
 
@@ -78,7 +78,7 @@ async function fetchArchiveData(url) {
     const error = await response.json();
 
     throw new Error(
-      error.reason || "Error retrieving historical climate data.",
+      error.reason || 'Error retrieving historical climate data.',
     );
   }
 

@@ -95,9 +95,7 @@ function selectValuesByIndexes(values, indexes) {
 function groupValuesByMonth(time, values) {
   const monthlyIndexes = groupIndexesByMonth(time);
 
-  return monthlyIndexes.map((indexes) =>
-    selectValuesByIndexes(values, indexes),
-  );
+  return monthlyIndexes.map((indexes) => selectValuesByIndexes(values, indexes));
 }
 
 // ==============================

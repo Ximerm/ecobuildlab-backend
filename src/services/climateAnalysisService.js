@@ -9,14 +9,12 @@
  * encargados de procesar la información climática obtenida desde
  * Open-Meteo.
  *
-Actualmente integra:
-- Estadísticas anuales
-- Análisis mensual
-- Clasificación climática (Caldas-Lang)
-- Rosa de los vientos
-
-En futuras versiones incorporará:
-- Generación de estrategias bioclimáticas
+ * Integra:
+ * - Estadísticas anuales
+ * - Análisis mensual
+ * - Clasificación climática (Caldas-Lang)
+ * - Rosa de los vientos
+ * - Generación de estrategias bioclimáticas
  * --------------------------------------------------------------------
  */
 
@@ -24,13 +22,15 @@ En futuras versiones incorporará:
 // Dependencias
 // ==============================
 
-const { calculateStatistics } = require("./climateAnalysis/statistics");
+const { calculateStatistics } = require('./climateAnalysis/statistics');
 
-const { calculateMonthlyAnalysis } = require("./climateAnalysis/monthly");
+const { calculateMonthlyAnalysis } = require('./climateAnalysis/monthly');
 
-const { classifyClimate } = require("./climateAnalysis/caldasLang");
+const { classifyClimate } = require('./climateAnalysis/caldasLang');
 
-const { calculateWindRose } = require("./climateAnalysis/windRose");
+const { calculateWindRose } = require('./climateAnalysis/windRose');
+
+const { generateStrategies } = require('./strategy/strategyGenerator');
 
 // ==============================
 // Funciones públicas
@@ -39,11 +39,22 @@ const { calculateWindRose } = require("./climateAnalysis/windRose");
 /**
  * Ejecuta el análisis climático completo.
  *
+ * Flujo:
+ * 1. Calcula las estadísticas climáticas.
+ * 2. Realiza el análisis mensual.
+ * 3. Clasifica el clima mediante Caldas-Lang.
+ * 4. Calcula la rosa de los vientos.
+ * 5. Genera las estrategias bioclimáticas.
+ *
  * @param {Object} hourly Datos horarios obtenidos desde Open-Meteo.
- * @returns {Object} Resultado del análisis climático.
+ * @returns {Object} Resultado completo del análisis climático.
  */
 
 function analyzeClimate(hourly) {
+  // ==============================
+  // Análisis climático
+  // ==============================
+
   const statistics = calculateStatistics(hourly);
 
   const monthly = calculateMonthlyAnalysis(hourly);
@@ -52,18 +63,42 @@ function analyzeClimate(hourly) {
 
   const windRose = calculateWindRose(hourly);
 
-  // Se incorporará en próximas versiones.
-  const strategies = [];
+  // ==============================
+  // Análisis base
+  // ==============================
+
+  /**
+   * Se construye el objeto de análisis antes de generar
+   * las estrategias para que el motor pueda acceder a:
+   *
+   * - statistics
+   * - classification.thermalZone
+   * - classification.moistureZone
+   *
+   * La estructura completa de clasificación se utiliza
+   * internamente para evaluar las condiciones de las
+   * recomendaciones.
+   */
+
+  const analysis = {
+    statistics,
+    monthly,
+    classification,
+    windRose,
+  };
+
+  // ==============================
+  // Estrategias bioclimáticas
+  // ==============================
+
+  const strategies = generateStrategies(analysis);
+
+  // ==============================
+  // Resultado
+  // ==============================
 
   return {
-    statistics,
-
-    monthly,
-
-    classification,
-
-    windRose,
-
+    ...analysis,
     strategies,
   };
 }

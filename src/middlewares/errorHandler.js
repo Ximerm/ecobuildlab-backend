@@ -12,9 +12,11 @@
 // Dependencias
 // ==============================
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
+
+const { applicationLogger } = require('../logger/logger');
 
 // ==============================
 // Funciones públicas
@@ -29,7 +31,10 @@ const MESSAGES = require("../constants/messages");
  * @param {Function} next Middleware siguiente.
  */
 function errorHandler(error, req, res, next) {
-  console.error(error);
+  applicationLogger.error('Unhandled application error.', {
+    error: error.message,
+    stack: error.stack,
+  });
 
   if (res.headersSent) {
     return next(error);
@@ -44,9 +49,17 @@ function errorHandler(error, req, res, next) {
 
   // Errores personalizados
   if (error.statusCode) {
-    return res.status(error.statusCode).json({
+    const response = {
       message: error.message,
-    });
+    };
+
+    // Conserva el identificador del análisis existente
+    // cuando se produce un conflicto por ubicación duplicada.
+    if (error.analysisId) {
+      response.analysisId = error.analysisId;
+    }
+
+    return res.status(error.statusCode).json(response);
   }
 
   // Error inesperado

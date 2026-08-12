@@ -15,13 +15,13 @@
 // Dependencias
 // ==============================
 
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const { JWT_SECRET } = require("../config/auth");
+const { JWT_SECRET } = require('../config/auth');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
 
-const UnauthorizedError = require("../errors/UnauthorizedError");
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
 // ==============================
 // Funciones públicas
@@ -42,11 +42,11 @@ function auth(req, res, next) {
   try {
     const { authorization } = req.headers;
 
-    if (!authorization || !authorization.startsWith("Bearer ")) {
+    if (!authorization || !authorization.startsWith('Bearer ')) {
       return next(new UnauthorizedError(MESSAGES.AUTHORIZATION_REQUIRED));
     }
 
-    const token = authorization.replace("Bearer ", "");
+    const token = authorization.replace('Bearer ', '');
 
     req.user = jwt.verify(token, JWT_SECRET);
 

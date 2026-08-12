@@ -14,7 +14,7 @@
 // Dependencias
 // ==============================
 
-const { THERMAL_ZONES, MOISTURE_ZONES } = require("../../constants/caldasLang");
+const { THERMAL_ZONES, MOISTURE_ZONES } = require('../../constants/caldasLang');
 
 // ==============================
 // Funciones privadas

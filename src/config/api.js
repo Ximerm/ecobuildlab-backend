@@ -23,7 +23,7 @@
  * Permite obtener la ubicación geográfica de una ciudad,
  * incluyendo coordenadas, elevación, país y zona horaria.
  */
-const GEOCODING_API_URL = "https://geocoding-api.open-meteo.com/v1/search";
+const GEOCODING_API_URL = 'https://geocoding-api.open-meteo.com/v1/search';
 
 /**
  * API de datos climáticos históricos.
@@ -31,7 +31,7 @@ const GEOCODING_API_URL = "https://geocoding-api.open-meteo.com/v1/search";
  * Proporciona información meteorológica horaria para un
  * período determinado.
  */
-const ARCHIVE_API_URL = "https://archive-api.open-meteo.com/v1/archive";
+const ARCHIVE_API_URL = 'https://archive-api.open-meteo.com/v1/archive';
 
 // ==============================
 // Configuración de Geocoding
@@ -44,9 +44,9 @@ const ARCHIVE_API_URL = "https://archive-api.open-meteo.com/v1/archive";
 
 const GEOCODING_DEFAULT_RESULTS = 1;
 
-const GEOCODING_DEFAULT_LANGUAGE = "es";
+const GEOCODING_DEFAULT_LANGUAGE = 'es';
 
-const GEOCODING_DEFAULT_FORMAT = "json";
+const GEOCODING_DEFAULT_FORMAT = 'json';
 
 // ==============================
 // Variables climáticas
@@ -67,13 +67,13 @@ const GEOCODING_DEFAULT_FORMAT = "json";
  * sin modificar los servicios que consumen esta configuración.
  */
 const HOURLY_VARIABLES = [
-  "temperature_2m",
-  "relative_humidity_2m",
-  "precipitation",
-  "wind_speed_10m",
-  "wind_direction_10m",
-  "shortwave_radiation",
-  "cloud_cover",
+  'temperature_2m',
+  'relative_humidity_2m',
+  'precipitation',
+  'wind_speed_10m',
+  'wind_direction_10m',
+  'shortwave_radiation',
+  'cloud_cover',
 ];
 
 /**
@@ -85,13 +85,13 @@ const HOURLY_VARIABLES = [
  */
 
 const HOURLY_VARIABLE_KEYS = {
-  TEMPERATURE: "temperature_2m",
-  HUMIDITY: "relative_humidity_2m",
-  PRECIPITATION: "precipitation",
-  WIND_SPEED: "wind_speed_10m",
-  WIND_DIRECTION: "wind_direction_10m",
-  RADIATION: "shortwave_radiation",
-  CLOUD_COVER: "cloud_cover",
+  TEMPERATURE: 'temperature_2m',
+  HUMIDITY: 'relative_humidity_2m',
+  PRECIPITATION: 'precipitation',
+  WIND_SPEED: 'wind_speed_10m',
+  WIND_DIRECTION: 'wind_direction_10m',
+  RADIATION: 'shortwave_radiation',
+  CLOUD_COVER: 'cloud_cover',
 };
 
 // ==============================

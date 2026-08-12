@@ -32,68 +32,68 @@ const SECTOR_ANGLE = 22.5;
  */
 const DIRECTIONS = [
   {
-    code: "N",
-    name: "Norte",
+    code: 'N',
+    name: 'Norte',
   },
   {
-    code: "NNE",
-    name: "Nor-noreste",
+    code: 'NNE',
+    name: 'Nor-noreste',
   },
   {
-    code: "NE",
-    name: "Noreste",
+    code: 'NE',
+    name: 'Noreste',
   },
   {
-    code: "ENE",
-    name: "Este-noreste",
+    code: 'ENE',
+    name: 'Este-noreste',
   },
   {
-    code: "E",
-    name: "Este",
+    code: 'E',
+    name: 'Este',
   },
   {
-    code: "ESE",
-    name: "Este-sureste",
+    code: 'ESE',
+    name: 'Este-sureste',
   },
   {
-    code: "SE",
-    name: "Sureste",
+    code: 'SE',
+    name: 'Sureste',
   },
   {
-    code: "SSE",
-    name: "Sur-sureste",
+    code: 'SSE',
+    name: 'Sur-sureste',
   },
   {
-    code: "S",
-    name: "Sur",
+    code: 'S',
+    name: 'Sur',
   },
   {
-    code: "SSW",
-    name: "Sur-suroeste",
+    code: 'SSW',
+    name: 'Sur-suroeste',
   },
   {
-    code: "SW",
-    name: "Suroeste",
+    code: 'SW',
+    name: 'Suroeste',
   },
   {
-    code: "WSW",
-    name: "Oeste-suroeste",
+    code: 'WSW',
+    name: 'Oeste-suroeste',
   },
   {
-    code: "W",
-    name: "Oeste",
+    code: 'W',
+    name: 'Oeste',
   },
   {
-    code: "WNW",
-    name: "Oeste-noroeste",
+    code: 'WNW',
+    name: 'Oeste-noroeste',
   },
   {
-    code: "NW",
-    name: "Noroeste",
+    code: 'NW',
+    name: 'Noroeste',
   },
   {
-    code: "NNW",
-    name: "Nor-noroeste",
+    code: 'NNW',
+    name: 'Nor-noroeste',
   },
 ];
 

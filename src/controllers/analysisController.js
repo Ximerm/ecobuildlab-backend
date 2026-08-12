@@ -1,40 +1,42 @@
 /**
- * --------------------------------------------------------------------
- * EcoBuildLab
- * Archivo: analysisController.js
- * --------------------------------------------------------------------
- * Controlador encargado de gestionar las solicitudes HTTP relacionadas
- * con los análisis bioclimáticos.
  *
- * Este módulo recibe las solicitudes del cliente, delega la lógica
- * de negocio a los servicios correspondientes y construye la respuesta
- * HTTP.
- * --------------------------------------------------------------------
+  ---
+- EcoBuildLab
+- Archivo: analysisController.js
+  ---
+- Controlador encargado de gestionar las solicitudes HTTP relacionadas
+- con los análisis bioclimáticos.
+-
+- Este módulo recibe las solicitudes del cliente, delega la lógica
+- de negocio a los servicios correspondientes y construye la respuesta
+- HTTP.
+  ---
  */
 
 // ==============================
 // Dependencias
 // ==============================
 
-const analysisGenerationService = require("../services/analysisGenerationService");
+const analysisGenerationService = require('../services/analysisGenerationService');
 
-const analysisPersistenceService = require("../services/analysisPersistenceService");
+const analysisPersistenceService = require('../services/analysisPersistenceService');
 
-const analysisRepository = require("../repositories/analysisRepository");
+const analysisRepository = require('../repositories/analysisRepository');
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
 
-const NotFoundError = require("../errors/NotFoundError");
+const NotFoundError = require('../errors/NotFoundError');
 
-const ForbiddenError = require("../errors/ForbiddenError");
+const ForbiddenError = require('../errors/ForbiddenError');
 
 // ==============================
 // Funciones públicas
 // ==============================
 
 /**
+ *
  * Genera un análisis bioclimático.
  *
  * No almacena información en la base de datos.
@@ -54,9 +56,15 @@ async function generateAnalysis(req, res, next) {
 }
 
 /**
+ *
  * Guarda un análisis generado previamente.
  *
- * El análisis queda asociado al usuario autenticado.
+ * Antes de guardarlo verifica si el usuario ya tiene
+ * un análisis para la misma ciudad y país.
+ *
+ * Si ya existe un análisis, el servicio de persistencia
+ * lanza un ConflictError con el identificador del análisis
+ * existente.
  *
  * @param {Object} req Solicitud HTTP.
  * @param {Object} res Respuesta HTTP.
@@ -69,13 +77,42 @@ async function saveAnalysis(req, res, next) {
       req.user._id,
     );
 
-    res.status(STATUS_CODES.CREATED).json(analysis);
+    return res.status(STATUS_CODES.CREATED).json(analysis);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
 
 /**
+ *
+ * Reemplaza un análisis existente.
+ *
+ * El análisis debe pertenecer al usuario autenticado.
+ *
+ * @param {Object} req Solicitud HTTP.
+ * @param {Object} res Respuesta HTTP.
+ * @param {Function} next Middleware para manejo de errores.
+ */
+async function replaceAnalysis(req, res, next) {
+  try {
+    const analysis = await analysisPersistenceService.replaceAnalysis(
+      req.body,
+      req.params.id,
+      req.user._id,
+    );
+
+    if (!analysis) {
+      throw new NotFoundError(MESSAGES.ANALYSIS_NOT_FOUND);
+    }
+
+    return res.status(STATUS_CODES.OK).json(analysis);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+/**
+ *
  * Obtiene todos los análisis del usuario autenticado.
  *
  * @param {Object} req Solicitud HTTP.
@@ -93,6 +130,7 @@ async function getAnalyses(req, res, next) {
 }
 
 /**
+ *
  * Obtiene un análisis por su identificador.
  *
  * @param {Object} req Solicitud HTTP.
@@ -117,6 +155,7 @@ async function getAnalysisById(req, res, next) {
 }
 
 /**
+ *
  * Elimina un análisis del usuario autenticado.
  *
  * @param {Object} req Solicitud HTTP.
@@ -152,6 +191,7 @@ async function deleteAnalysis(req, res, next) {
 module.exports = {
   generateAnalysis,
   saveAnalysis,
+  replaceAnalysis,
   getAnalyses,
   getAnalysisById,
   deleteAnalysis,

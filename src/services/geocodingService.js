@@ -20,7 +20,7 @@ const {
   GEOCODING_DEFAULT_RESULTS,
   GEOCODING_DEFAULT_LANGUAGE,
   GEOCODING_DEFAULT_FORMAT,
-} = require("../config/api");
+} = require('../config/api');
 
 // ==============================
 // Funciones privadas
@@ -53,7 +53,7 @@ async function fetchLocation(query) {
   const response = await fetch(buildSearchUrl(query));
 
   if (!response.ok) {
-    throw new Error("Error retrieving location data.");
+    throw new Error('Error retrieving location data.');
   }
 
   return response.json();
@@ -93,7 +93,7 @@ async function searchCity(query) {
   const data = await fetchLocation(query);
 
   if (!data.results || data.results.length === 0) {
-    throw new Error("City not found.");
+    throw new Error('City not found.');
   }
 
   return normalizeLocation(data.results[0]);
@@ -112,7 +112,7 @@ async function searchCity(query) {
  * @returns {Promise<Object>} Ubicación normalizada.
  */
 async function getLocation(data) {
-  const query = [data.city, data.country].filter(Boolean).join(", ");
+  const query = [data.city, data.country].filter(Boolean).join(', ');
 
   return searchCity(query);
 }

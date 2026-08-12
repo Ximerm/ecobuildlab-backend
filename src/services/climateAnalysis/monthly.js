@@ -18,11 +18,11 @@
 // Dependencias
 // ==============================
 
-const { HOURLY_VARIABLE_KEYS } = require("../../config/api");
+const { HOURLY_VARIABLE_KEYS } = require('../../config/api');
 
-const { calculateSummaryStatistics, calculateSum } = require("./mathUtilities");
+const { calculateSummaryStatistics, calculateSum } = require('./mathUtilities');
 
-const { groupValuesByMonth } = require("./timeUtilities");
+const { groupValuesByMonth } = require('./timeUtilities');
 
 // ==============================
 // Funciones privadas
@@ -92,7 +92,7 @@ function calculateMonthlyRadiation(monthlyValues) {
  * @returns {Object[]} Resumen climático mensual.
  */
 function calculateMonthlyAnalysis(hourly) {
-  const time = hourly.time;
+  const { time } = hourly;
 
   const monthlyTemperature = groupValuesByMonth(
     time,

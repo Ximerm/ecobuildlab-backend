@@ -15,25 +15,25 @@
 // Dependencias
 // ==============================
 
-const express = require("express");
+const express = require('express');
 
-const cors = require("cors");
+const cors = require('cors');
 
-const helmet = require("helmet");
+const helmet = require('helmet');
 
-const { errors } = require("celebrate");
+const { errors } = require('celebrate');
 
-const connectDB = require("./config/database");
+const connectDB = require('./config/database');
 
-const rateLimiter = require("./config/rateLimiter");
+const rateLimiter = require('./config/rateLimiter');
 
-const { getHome } = require("./controllers/mainController");
+const { getHome } = require('./controllers/mainController');
 
-const routes = require("./routes");
+const routes = require('./routes');
 
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require('./middlewares/errorHandler');
 
-const { requestLogger, errorLogger } = require("./logger/logger");
+const { requestLogger, errorLogger } = require('./logger/logger');
 
 // ==============================
 // Configuración de la aplicación
@@ -41,7 +41,7 @@ const { requestLogger, errorLogger } = require("./logger/logger");
 
 const app = express();
 
-app.set("trust proxy", 1);
+app.set('trust proxy', 1);
 
 // ==============================
 // Configuración CORS
@@ -49,7 +49,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: 'http://localhost:5173',
   }),
 );
 
@@ -91,12 +91,12 @@ app.use(requestLogger);
 /**
  * Página principal del servidor.
  */
-app.get("/", getHome);
+app.get('/', getHome);
 
 /**
  * Rutas de la API.
  */
-app.use("/api", routes);
+app.use('/api', routes);
 
 // ==============================
 // Manejo de errores

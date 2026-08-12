@@ -8,7 +8,7 @@
  * --------------------------------------------------------------------
  */
 
-const { celebrate, Joi, Segments } = require("celebrate");
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const objectIdPattern = /^[0-9a-fA-F]{24}$/;
 

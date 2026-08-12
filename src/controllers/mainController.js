@@ -15,13 +15,13 @@
 // Dependencias
 // ==============================
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
 // ==============================
 // Constantes
 // ==============================
 
-const API_MESSAGE = "EcoBuildLab API is running.";
+const API_MESSAGE = 'EcoBuildLab API is running.';
 
 // ==============================
 // Funciones públicas

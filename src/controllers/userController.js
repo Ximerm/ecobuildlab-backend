@@ -16,13 +16,13 @@
 // Dependencias
 // ==============================
 
-const authService = require("../services/authService");
+const authService = require('../services/authService');
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
 
-const NotFoundError = require("../errors/NotFoundError");
+const NotFoundError = require('../errors/NotFoundError');
 
 // ==============================
 // Funciones públicas

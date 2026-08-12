@@ -13,9 +13,11 @@
 // Dependencias
 // ==============================
 
-require("dotenv").config();
+require('dotenv').config();
 
-const app = require("./app");
+const app = require('./app');
+
+const { applicationLogger } = require('./logger/logger');
 
 // ==============================
 // Configuración
@@ -28,5 +30,5 @@ const PORT = process.env.PORT || 3000;
 // ==============================
 
 app.listen(PORT, () => {
-  console.log(`🚀 EcoBuildLab server is running on port ${PORT}.`);
+  applicationLogger.info(`EcoBuildLab server is running on port ${PORT}.`);
 });

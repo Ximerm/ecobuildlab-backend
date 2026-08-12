@@ -8,9 +8,9 @@
  * --------------------------------------------------------------------
  */
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
 
 class InternalServerError extends Error {
   constructor(message = MESSAGES.INTERNAL_SERVER_ERROR) {

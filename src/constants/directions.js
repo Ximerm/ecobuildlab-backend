@@ -16,68 +16,68 @@
 
 const DIRECTIONS = [
   {
-    code: "N",
-    name: "North",
+    code: 'N',
+    name: 'North',
   },
   {
-    code: "NNE",
-    name: "North-Northeast",
+    code: 'NNE',
+    name: 'North-Northeast',
   },
   {
-    code: "NE",
-    name: "Northeast",
+    code: 'NE',
+    name: 'Northeast',
   },
   {
-    code: "ENE",
-    name: "East-Northeast",
+    code: 'ENE',
+    name: 'East-Northeast',
   },
   {
-    code: "E",
-    name: "East",
+    code: 'E',
+    name: 'East',
   },
   {
-    code: "ESE",
-    name: "East-Southeast",
+    code: 'ESE',
+    name: 'East-Southeast',
   },
   {
-    code: "SE",
-    name: "Southeast",
+    code: 'SE',
+    name: 'Southeast',
   },
   {
-    code: "SSE",
-    name: "South-Southeast",
+    code: 'SSE',
+    name: 'South-Southeast',
   },
   {
-    code: "S",
-    name: "South",
+    code: 'S',
+    name: 'South',
   },
   {
-    code: "SSW",
-    name: "South-Southwest",
+    code: 'SSW',
+    name: 'South-Southwest',
   },
   {
-    code: "SW",
-    name: "Southwest",
+    code: 'SW',
+    name: 'Southwest',
   },
   {
-    code: "WSW",
-    name: "West-Southwest",
+    code: 'WSW',
+    name: 'West-Southwest',
   },
   {
-    code: "W",
-    name: "West",
+    code: 'W',
+    name: 'West',
   },
   {
-    code: "WNW",
-    name: "West-Northwest",
+    code: 'WNW',
+    name: 'West-Northwest',
   },
   {
-    code: "NW",
-    name: "Northwest",
+    code: 'NW',
+    name: 'Northwest',
   },
   {
-    code: "NNW",
-    name: "North-Northwest",
+    code: 'NNW',
+    name: 'North-Northwest',
   },
 ];
 

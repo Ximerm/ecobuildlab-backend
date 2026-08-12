@@ -8,7 +8,7 @@
  * --------------------------------------------------------------------
  */
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
 class ForbiddenError extends Error {
   constructor(message) {

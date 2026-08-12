@@ -7,7 +7,7 @@
  * --------------------------------------------------------------------
  */
 
-const STATUS_CODES = require("../constants/statusCodes");
+const STATUS_CODES = require('../constants/statusCodes');
 
 class NotFoundError extends Error {
   constructor(message) {

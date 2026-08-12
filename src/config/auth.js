@@ -22,13 +22,12 @@
  * En desarrollo se utiliza una clave local para facilitar
  * las pruebas sin necesidad de un archivo .env.
  */
-const JWT_SECRET =
-  process.env.NODE_ENV === "production" ? process.env.JWT_SECRET : "dev-secret";
+const JWT_SECRET = process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'dev-secret';
 
 /**
  * Tiempo de expiración del token JWT.
  */
-const TOKEN_EXPIRATION = "7d";
+const TOKEN_EXPIRATION = '7d';
 
 // ==============================
 // Configuración de contraseñas

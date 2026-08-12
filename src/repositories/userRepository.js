@@ -15,7 +15,7 @@
 // Dependencias
 // ==============================
 
-const User = require("../models/user");
+const User = require('../models/user');
 
 // ==============================
 // Funciones públicas
@@ -40,7 +40,7 @@ async function create(data) {
  * @returns {Promise<Object|null>}
  */
 async function findByEmail(email) {
-  return User.findOne({ email }).select("+password");
+  return User.findOne({ email }).select('+password');
 }
 
 /**

@@ -15,11 +15,11 @@
 // Dependencias
 // ==============================
 
-const { getLocation } = require("./geocodingService");
+const { getLocation } = require('./geocodingService');
 
-const { getHistoricalClimate } = require("./historicalClimateService");
+const { getHistoricalClimate } = require('./historicalClimateService');
 
-const { analyzeClimate } = require("./climateAnalysisService");
+const { analyzeClimate } = require('./climateAnalysisService');
 
 // ==============================
 // Funciones públicas
@@ -49,7 +49,7 @@ async function generateAnalysis(data) {
 
   // Validar que existan datos horarios
   if (!historicalClimate.hourly) {
-    throw new Error("Historical climate data not available.");
+    throw new Error('Historical climate data not available.');
   }
 
   // Ejecutar el análisis climático

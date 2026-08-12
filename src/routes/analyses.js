@@ -1,33 +1,38 @@
 /**
- * --------------------------------------------------------------------
+ *
+ * ---
  * EcoBuildLab
  * Archivo: analyses.js
- * --------------------------------------------------------------------
+ *
+ * ---
  * Define las rutas relacionadas con los análisis bioclimáticos.
- * --------------------------------------------------------------------
+ *
+ * ---
+ *
  */
 
 // ==============================
 // Dependencias
 // ==============================
 
-const express = require("express");
+const express = require('express');
 
 const {
   generateAnalysis,
   saveAnalysis,
+  replaceAnalysis,
   getAnalyses,
   getAnalysisById,
   deleteAnalysis,
-} = require("../controllers/analysisController");
+} = require('../controllers/analysisController');
 
-const auth = require("../middlewares/auth");
+const auth = require('../middlewares/auth');
 
 const {
   generateAnalysisValidation,
   saveAnalysisValidation,
   analysisIdValidation,
-} = require("../validations/analysisValidation");
+} = require('../validations/analysisValidation');
 
 // ==============================
 // Configuración
@@ -36,39 +41,38 @@ const {
 const router = express.Router();
 
 // ==============================
-// Middleware de autenticación
+// Generación de análisis
 // ==============================
 
-router.use(auth);
+/**
+ *
+ * Genera un análisis climático.
+ *
+ * Esta ruta es pública porque el usuario puede
+ * consultar las condiciones climáticas de una
+ * ubicación sin necesidad de iniciar sesión.
+ */
+router.post('/generate', generateAnalysisValidation, generateAnalysis);
 
 // ==============================
 // Rutas protegidas
 // ==============================
 
-/**
- * Genera un análisis climático para el usuario autenticado.
- */
-router.post("/generate", generateAnalysisValidation, generateAnalysis);
+router.post('/', auth, saveAnalysisValidation, saveAnalysis);
 
-/**
- * Guarda un análisis.
- */
-router.post("/", saveAnalysisValidation, saveAnalysis);
+router.get('/', auth, getAnalyses);
 
-/**
- * Obtiene los análisis del usuario autenticado.
- */
-router.get("/", getAnalyses);
+router.get('/:id', auth, analysisIdValidation, getAnalysisById);
 
-/**
- * Obtiene un análisis por id.
- */
-router.get("/:id", analysisIdValidation, getAnalysisById);
+router.patch(
+  '/:id',
+  auth,
+  analysisIdValidation,
+  saveAnalysisValidation,
+  replaceAnalysis,
+);
 
-/**
- * Elimina un análisis.
- */
-router.delete("/:id", analysisIdValidation, deleteAnalysis);
+router.delete('/:id', auth, analysisIdValidation, deleteAnalysis);
 
 // ==============================
 // Exportaciones

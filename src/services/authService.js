@@ -15,17 +15,17 @@
 // Dependencias
 // ==============================
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
 
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const userRepository = require("../repositories/userRepository");
+const userRepository = require('../repositories/userRepository');
 
-const UnauthorizedError = require("../errors/UnauthorizedError");
+const UnauthorizedError = require('../errors/UnauthorizedError');
 
-const MESSAGES = require("../constants/messages");
+const MESSAGES = require('../constants/messages');
 
-const { JWT_SECRET, TOKEN_EXPIRATION, SALT_ROUNDS } = require("../config/auth");
+const { JWT_SECRET, TOKEN_EXPIRATION, SALT_ROUNDS } = require('../config/auth');
 
 // ==============================
 // Funciones públicas

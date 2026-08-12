@@ -18,13 +18,13 @@
 // Dependencias
 // ==============================
 
-const { HOURLY_VARIABLE_KEYS } = require("../../config/api");
+const { HOURLY_VARIABLE_KEYS } = require('../../config/api');
 
 const {
   calculateSum,
   calculateSummaryStatistics,
   round,
-} = require("./mathUtilities");
+} = require('./mathUtilities');
 
 // ==============================
 // Funciones privadas

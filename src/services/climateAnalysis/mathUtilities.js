@@ -132,10 +132,10 @@ function calculateMedian(values) {
  */
 function calculatePercentage(value, total) {
   if (
-    total === null ||
-    total === undefined ||
-    Number.isNaN(total) ||
-    total === 0
+    total === null
+    || total === undefined
+    || Number.isNaN(total)
+    || total === 0
   ) {
     return null;
   }

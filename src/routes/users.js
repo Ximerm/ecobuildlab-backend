@@ -11,20 +11,20 @@
 // Dependencias
 // ==============================
 
-const express = require("express");
+const express = require('express');
 
-const auth = require("../middlewares/auth");
+const auth = require('../middlewares/auth');
 
 const {
   signup,
   signin,
   getCurrentUser,
-} = require("../controllers/userController");
+} = require('../controllers/userController');
 
 const {
   validateSignup,
   validateSignin,
-} = require("../validations/userValidation");
+} = require('../validations/userValidation');
 
 // ==============================
 // Configuración del router
@@ -40,19 +40,19 @@ const router = express.Router();
  * POST /
  * Registra un nuevo usuario.
  */
-router.post("/signup", validateSignup, signup);
+router.post('/signup', validateSignup, signup);
 
 /**
  * POST /signin
  * Autentica un usuario y devuelve un JWT.
  */
-router.post("/signin", validateSignin, signin);
+router.post('/signin', validateSignin, signin);
 
 /**
  * GET /users/me
  * Obtiene la información del usuario autenticado.
  */
-router.get("/users/me", auth, getCurrentUser);
+router.get('/users/me', auth, getCurrentUser);
 
 // ==============================
 // Exportaciones

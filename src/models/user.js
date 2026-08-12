@@ -17,9 +17,9 @@
 // Dependencias
 // ==============================
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const validator = require("validator");
+const validator = require('validator');
 
 // ==============================
 // Esquema
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       validate: {
         validator: validator.isEmail,
-        message: "Invalid email address.",
+        message: 'Invalid email address.',
       },
     },
 
@@ -62,4 +62,4 @@ const userSchema = new mongoose.Schema(
 // Exportaciones
 // ==============================
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);
