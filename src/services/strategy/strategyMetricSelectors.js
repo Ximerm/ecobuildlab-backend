@@ -32,7 +32,7 @@ const strategyMetricSelectors = Object.freeze({
 
   [CLIMATE_METRICS.AVERAGE_WIND_SPEED]: (analysis) => analysis.statistics.wind.annual.speed.mean,
 
-  [CLIMATE_METRICS.SOLAR_RADIATION]: (analysis) => analysis.statistics.radiation.annual.mean,
+  [CLIMATE_METRICS.SOLAR_RADIATION]: (analysis) => analysis.statistics.solarIrradiation.annual.mean,
 
   [CLIMATE_METRICS.ANNUAL_PRECIPITATION]: (a) => a.statistics.precipitation.annual.total,
 });
